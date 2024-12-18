@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+</head>
+<body>
+    <style>
+     
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #41d8fd);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+
+.container {
+    max-width: 400px;
+    height: 500PX;
+    width: 100%;
+    padding: 40px;
+    border-radius: 8px;
+    background: #91dcfa;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: #1d1c1c;
+}
+
+.card h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #044753;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+   
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+
+.result-card {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #6a11cb, #41d8fd);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+    </style>
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-weight"></i> BMI Calculator</h1>
+            <form id="bmiForm" onsubmit="return calculateBMI()">
+                <div class="input-group">
+                    <label for="weight"><i class="fas fa-weight"></i> Weight (kg):</label>
+                    <input type="number" id="weight" placeholder="Enter your weight" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="height"><i class="fas fa-ruler-vertical"></i> Height (cm):</label>
+                    <input type="number" id="height" placeholder="Enter your height" required>
+                </div>
+
+                <button type="submit" class="btn">Calculate BMI</button>
+            </form>
+
+            <div id="result" class="result-card hidden">
+                <h2>Results:</h2>
+                <p><strong>BMI:</strong> <span id="bmiValue"></span></p>
+                <p><strong>Category:</strong> <span id="bmiCategory"></span></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function calculateBMI() {
+   
+   const weight = parseFloat(document.getElementById('weight').value);
+   const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to meters
+
+ 
+   if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+       alert('Please enter valid positive numbers for weight and height.');
+       return false;
+   }
+
+   
+   const bmi = (weight / (height * height)).toFixed(2);
+
+   
+   let category = '';
+   if (bmi < 18.5) {
+       category = 'Underweight';
+   } else if (bmi >= 18.5 && bmi < 24.9) {
+       category = 'Normal weight';
+   } else if (bmi >= 25 && bmi < 29.9) {
+       category = 'Overweight';
+   } else if (bmi >= 30 && bmi < 39.9) {
+       category = 'Obesity';
+   } else {
+       category = 'Severe Obesity';
+   }
+
+
+   document.getElementById('bmiValue').innerText = bmi;
+   document.getElementById('bmiCategory').innerText = category;
+   document.getElementById('result').classList.remove('hidden');
+
+   return false; 
+}
+    </script>
+</body>
+</html>
